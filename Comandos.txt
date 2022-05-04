@@ -1,0 +1,8 @@
+
+ django-admin startproject Tecnologias_Chapinas crear el proyecto de django
+
+
+ python manage.py startapp AnalisisRedes  crear nueva app
+
+
+ python  manage.py runserver   ejecutar el servidor
