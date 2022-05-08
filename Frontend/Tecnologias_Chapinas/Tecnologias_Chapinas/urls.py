@@ -19,7 +19,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     # cualquier url que empiece con AnalisisRedes/ se enruta a la app de AnalisisRedes
-    path('AnalisisRedes/', include('AnalisisRedes.urls'))
+    path('', include('AnalisisRedes.urls'))
 ]
 
 # si mandamos un request a AnalisisRedes/prueba

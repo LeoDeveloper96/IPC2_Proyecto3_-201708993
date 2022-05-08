@@ -12,5 +12,6 @@ urlpatterns = [
     # como el metodo no tiene parentesis significa que solo paso una refencia a la funcion
     # aqui solo paso index porque ya verifique que viniera AnalisisRedes/... en mi modulo de configuracion principal
     # las rutas siempre terminan con /
-    path('index/', views.index)
+    path('', views.index),
+    path('/enviar', views.enviar)
 ]

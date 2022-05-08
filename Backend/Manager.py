@@ -18,7 +18,7 @@ class manager:
                 'mensajes': solicitud.mensajes,
                 'negativos': solicitud.negativos,
                 'positivos': solicitud.positivos,
-                'empresas':solicitud.empresas
+                'empresas': solicitud.empresas
             }
             json.append(solicitud)
         return json
