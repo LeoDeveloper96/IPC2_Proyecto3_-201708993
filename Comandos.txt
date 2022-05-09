@@ -6,3 +6,5 @@
 
 
  python  manage.py runserver   ejecutar el servidor
+
+ flask run --no-reload

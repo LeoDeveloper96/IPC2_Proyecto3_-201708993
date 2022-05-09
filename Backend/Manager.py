@@ -1,7 +1,7 @@
 from Modelos.Mensaje import Mensaje
-from Modelos.Empresa import empresa
-from Modelos.Servicio import servicio
-from Modelos.Solicitud import solicitud
+from Modelos.Empresa import Empresa
+from Modelos.Servicio import Servicio
+from Modelos.Solicitud import Solicitud
 
 class manager:
 
@@ -9,7 +9,7 @@ class manager:
         self.solicitudes = []
 
     def agregar_solicitud(self, mensajes, negativos, positivos, empresas):
-        self.solicitudes.append(solicitud(mensajes, negativos, positivos, empresas))
+        self.solicitudes.append(Solicitud(mensajes, negativos, positivos, empresas))
 
     def obtener_solicitudes(self):
         json = []
