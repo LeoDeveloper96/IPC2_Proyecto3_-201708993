@@ -1,4 +1,4 @@
-from Modelos.Mensaje import mensaje
+from Modelos.Mensaje import Mensaje
 from Modelos.Empresa import empresa
 from Modelos.Servicio import servicio
 from Modelos.Solicitud import solicitud

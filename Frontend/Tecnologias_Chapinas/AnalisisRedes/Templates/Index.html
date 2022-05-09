@@ -9,20 +9,24 @@
     </div>
     <div class="col-lg-4"></div>
 
-            <div class="col-lg-4 pt-1" style="text-align: right;">
-                <input type="file" id="file-input" hidden="true"/>
+            <form id='form1' action="/enviar/" method="POST" enctype="multipart/form-data" class="col-lg-4 pt-1" style="text-align: right;">
+            <!--                Esta es la parte que se llama en views, el atr name-->
+                <input type="file" id="file-input"  name ='file' hidden="true"/>
                 <button type="button" class="btn btn-lg btn-primary  mr-2" id="btnCargar" onclick="cargarArchivo()">Cargar Archivo</button>
                 <button type="button" class="btn btn-lg btn-primary  mr-2">Peticiones</button>
                 <button type="button" class="btn btn-lg btn-primary  mr-2">Ayuda</button>
-            </div>
+            </form>
     </div>
 </div>
+
+
 <!--Seccion 2-->
 <div class="row mt-2">
     <div class="col-lg-4"></div>
     <div class="col-lg-4"></div>
         <div class="col-lg-4 pt-1" style="text-align: right;">
-             <button type="button" class="btn  btn-lg btn-success mr-4">Enviar</button>
+
+             <button type="submit" class="btn  btn-lg btn-success mr-4" id="file"  form="form1">Enviar</button>
              <button type="button" class="btn btn-lg btn-danger mr-4">Reset</button>
         </div>
     </div>
@@ -40,7 +44,7 @@
     <div class="col-lg-6"   align="center">
     <div class="form-group w-75">
     <label for="Textarea2">Salida</label>
-    <textarea class="form-control" id="Textarea2" rows="18"></textarea>
+    <textarea class="form-control" id="Textarea2" rows="18">{{response}}</textarea>
     </div>
     </div>
 

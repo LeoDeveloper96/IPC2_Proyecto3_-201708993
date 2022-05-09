@@ -13,5 +13,5 @@ urlpatterns = [
     # aqui solo paso index porque ya verifique que viniera AnalisisRedes/... en mi modulo de configuracion principal
     # las rutas siempre terminan con /
     path('', views.index),
-    path('/enviar', views.enviar)
+    path('enviar/', views.enviar, name='enviar')
 ]

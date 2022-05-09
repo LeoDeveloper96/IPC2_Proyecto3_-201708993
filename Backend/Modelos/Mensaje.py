@@ -1,4 +1,4 @@
-class mensaje:
+class Mensaje:
 
     def __init__(self, usuario,red,fecha_hora,lugar,texto):
         self.usuario = usuario

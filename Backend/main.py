@@ -4,7 +4,8 @@ from Manager import manager
 from flask import Flask, jsonify, request
 from flask.json import jsonify
 from xml.etree import ElementTree as ET
-import re
+from Backend.Modelos.Mensaje import Mensaje
+import regex
 
 app = Flask(__name__)
 
@@ -20,6 +21,7 @@ def index():
 # Envia la solicitud de clasificacion
 @app.route('/enviar', methods=['POST'])
 def enviar():
+    print("a")
     xml = request.get_data().decode('utf-8')
     raiz = ET.XML(xml)
     sentimientos_positivos = raiz.find('sentimientos_positivos')
@@ -28,18 +30,18 @@ def enviar():
     sn = []
     lista_mensajes = raiz.find('lista_mensajes')
     mensajes = lista_mensajes.findall('mensaje')
-    mn = []
+    m = []
     for mensaje in mensajes:
-        cad_lugarFecha = re.search("Lugar(\s+|\t+|\n+)y(\s+|\t+|\n+)fecha:(\s+|\t+|\n+)([a-zA-Z]+),(\s+|\t+|\n+)([0-9]{2}\/[0-9]{2}\/[0-9]{4})(\s+|\t+|\n+)([0-9]{2}:[0-9]{2})",
+        cad_lugarFecha = regex.search("Lugar(\s+|\t+|\n+)y(\s+|\t+|\n+)fecha:(\s+|\t+|\n+)([a-zA-Z]+),(\s+|\t+|\n+)([0-9]{2}\/[0-9]{2}\/[0-9]{4})(\s+|\t+|\n+)([0-9]{2}:[0-9]{2})",
                          mensaje.text).group(0)
-        lugar = cad_lugarFecha[cad_lugarFecha.index(':'):len(mensaje.text.split(',')[0])-1]
+        lugar = cad_lugarFecha[cad_lugarFecha.index(':'):len(mensaje.text.split(',')[0])-2]
         fecha_hora = cad_lugarFecha.split(',')[1]
-        usuario = re.search("Usuario:(\s|\t|\n)+[a-zA-Z0-9]+@[a-zA-Z]+.[a-zA-Z]+", mensaje.text).group(0)
-        usr = usuario[usuario.index(':'):]
-        red = re.search("Red(\s|\t|\n)+social:(\s|\t|\n)+[a-zA-Z]+", mensaje.text).group(0)
-        red = red[red.index(':'):]
-        texto = re.search("(?<=Red(\s|\t|\n)+social:(\s|\t|\n)+[a-zA-Z]+(\s|\t|\n)+)(.|(\s|\t|\n))+", mensaje.text).group(0)
-        mn.append(usr,red,fecha_hora,lugar,texto)
+        usuario = regex.search("Usuario:(\s|\t|\n)+[a-zA-Z0-9]+@[a-zA-Z]+.[a-zA-Z]+", mensaje.text).group(0)
+        usr = regex.sub("(\s|\t\n)*","",usuario[usuario.index(':')+1:])
+        red = regex.search("Red(\s|\t|\n)+social:(\s|\t|\n)+[a-zA-Z]+", mensaje.text).group(0)
+        red = red[red.index(':')+1:]
+        texto = regex.sub("\n*","", regex.search("(?<=Red(\s|\t|\n)+social:(\s|\t|\n)+[a-zA-Z]+(\s|\t|\n)+)(.|(\s|\t|\n))+", mensaje.text).group(0))
+        m.append(Mensaje(usr, red, fecha_hora, lugar, texto))
     empresas_analizar = raiz.find('empresas_analizar')
     empresas = empresas_analizar.findall('empresa')
     s = []
@@ -53,14 +55,10 @@ def enviar():
                 a.append(al.text)
             s.append(serv.attrib['nombre'])
         emp.append(empresa.find('nombre').text)
-    mn.agregar_solicitud(mn, sn, sp, emp)
+    mn.agregar_solicitud(m, sn, sp, emp)
     a = 1
     return jsonify({'ok': True, 'msg': 'solicitud guardada correctamente!'}), 200
 
-# Recibe la clasificacion
-@app.route('/recibir')
-def recibir():
-    return 'Hola, soy una API', 200
 
 if __name__=='__main__':
     app.run(debug=True, port=4000)
