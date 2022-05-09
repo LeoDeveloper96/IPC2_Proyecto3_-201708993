@@ -61,8 +61,10 @@ def enviar():
             alias = serv.findall('alias')
             for al in alias:
                 a.append(al.text)
-            s.append(Servicio(serv.attrib['nombre'],a))
-        emp.append(Empresa(empresa.find('nombre').text,s))
+            s.append(Servicio(serv.attrib['nombre'], a))
+            a = []
+        emp.append(Empresa(empresa.find('nombre').text, s))
+        s = []
     mn.agregar_solicitud(m, sn, sp, emp)
     a = 1
     return jsonify({'ok': True, 'msg': 'solicitud guardada correctamente!'}), 200
